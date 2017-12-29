@@ -11,7 +11,7 @@ for($i=0;$i<=13;$i++)
     $jour = date('l',$premDimanche);
     switch ($jour) {
         case "Sunday":
-            $jour="Dimanche";
+            $jour="Dimanchee";
             break;
         case "Monday":
             $jour="Lundi";

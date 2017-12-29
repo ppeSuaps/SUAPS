@@ -23,7 +23,7 @@ $req = $bdd->query($sql);
 
 if ($row = $req->fetch()) {
     do {
-        echo 'YES';
+        echo 'YESs';
     } while ($row = $req->fetch());
 } else {
     echo 'NO';
