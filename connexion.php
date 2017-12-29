@@ -4,7 +4,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title> Connexion SUAPS </title>
+	<title> Connexion SUPS </title>
     <link rel="stylesheet" media="" href="style.css">
 </head>
 
