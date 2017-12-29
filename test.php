@@ -29,7 +29,7 @@ for($i=0;$i<=13;$i++)
             $jour="Vendredi";
             break;
         case "Saturday":
-            $jour="Samedii";
+            $jour="Samedi";
             break;
     }
     
