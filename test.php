@@ -11,7 +11,7 @@ for($i=0;$i<=13;$i++)
     $jour = date('l',$premDimanche);
     switch ($jour) {
         case "Sunday":
-            $jour="Dimanchee";
+            $jour="Dimanche";
             break;
         case "Monday":
             $jour="Lundi";
@@ -42,7 +42,21 @@ for($i=0;$i<=13;$i++)
 }
 print_r($tab)
 
+
+
 ?>
+
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title> Connexion SUAPS </title>
+    <link rel="stylesheet" media="" href="style.css">
+</head>
+
+<body>
 
 <table>
    <caption>PLANNING DE RESERVATION</caption>
@@ -76,3 +90,7 @@ print_r($tab)
       	?>       
    </tbody>
 </table>
+
+</body>
+
+</html>

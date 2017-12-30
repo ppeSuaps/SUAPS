@@ -4,27 +4,21 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title> Connexion SUAPSS </title>
+	<title> Connexion SUAPS </title>
     <link rel="stylesheet" media="" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 
 <header>
-	<h1> Bienvenue sur le service d'authentification du SUAPS </h1>
-	<img class="suaps" src="img/img_suaps.png" alt="SUAPS" width="1600">
+	
+	<a href="https://sport.unistra.fr/suaps/actualites/" title="Actualités - Service des Sports - Université de Strasbourg">
+		<img class="suaps" src="img/img_suaps.png" alt="SUAPS" width="1600">
+	</a>
 </header>
 
 <main>
-
-<nav>
-	<ul>
-		<li><a href="https://sport.unistra.fr/suaps/actualites/">Accueil</a></li>
-		<li><a href="reservation.php">Réservation</a></li>
-		<li><a href="aide.html">Aide</a></li>
-		<li><a href="contact.html">Contact</a></li>
-	</ul>
-</nav>
 
 <div class=div_logo_unistra>
 	<a href="http://www.unistra.fr" title="Université de Strasbourg">
@@ -33,6 +27,7 @@
 </div>
 
 <div class="form">
+	<h2><i>Bienvenue sur le service d'authentification du SUAPS </i></h2>
     <form method="post" action="reservation.php">
     	<label for="pseudo">Identifiant</label>
         <input type="text" name="pseudo" id="pseudo" />
@@ -52,9 +47,7 @@
 
 </main>
 
-<footer>
-</footer>
 
 </body>
 
-</html>
+
