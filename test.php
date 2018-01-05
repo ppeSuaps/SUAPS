@@ -1,12 +1,28 @@
 <?php
 
+try
+{
+    // On se connecte à MySQL
+    $bdd = new PDO('mysql:host=localhost;dbname=suaps;charset=utf8','root','');
+    array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+    
+}
+catch (Exception $e)
+{
+    
+    // En cas d'erreur, on affiche un message et on arrête tout
+    die('Erreur : '.$e->getMessage());
+    
+}
+
+
 $date = strtotime(date("Y-m-d"));
 $premDimanche = strtotime(date('Y-m-d',strtotime("last Sunday")));
 $derDimanche = date("Y-m-d", strtotime($premDimanche . " +13 day"));
 
-$tab[]=array();
+$tab[]=array(array());
 
-for($i=0;$i<=13;$i++)
+for($i=0;$i<=180;$i++)
 {
     $jour = date('l',$premDimanche);
     switch ($jour) {
@@ -33,64 +49,61 @@ for($i=0;$i<=13;$i++)
             break;
     }
     
-    $chDate= $jour." ".date('j',$premDimanche);
-    echo $chDate;
-    array_push($tab, $chDate);
+    $mois= date('F',$premDimanche);
+    switch ($mois) {
+        case "January":
+            $mois="Janvier";
+            break;
+        case "February":
+            $mois="Février";
+            break;
+        case "March":
+            $mois="Mars";
+            break;
+        case "April":
+            $mois="Avril";
+            break;
+        case "May":
+            $mois="Mai";
+            break;
+        case "June":
+            $mois="Juin";
+            break;
+        case "July":
+            $mois="Juillet";
+            break;
+        case "August":
+            $mois="Août";
+            break;
+        case "September":
+            $mois="Septembre";
+            break;
+        case "October":
+            $mois="Octobre";
+            break;
+        case "November":
+            $mois="Novembre";
+            break;
+        case "December":
+            $mois="Décembre";
+            break;
+    }
+    
+    //     $chDate= $jour." ".date('j',$premDimanche)." ".$mois;
+    $chDate= $jour." ".date('d',$premDimanche)."/".date('m',$premDimanche)."/".date('Y',$premDimanche)."\n";
+    $tab[$i][0]=$chDate;
+    $sql="SELECT * FROM utilisateur U JOIN reservation R ON U.idUtil=R.fk_idUtil WHERE datePrevu='".substr($tab[$i][0], -5, 4)."-".substr($tab[$i][0], -8, 2)."-".substr($tab[$i][0], -11, 2)."'";
+    
+    $req=$bdd->query($sql);
+    while($row = $req->fetch()){
+        array_push($tab[$i], $row['prenom']." ".$row['nom']);
+        echo $row['prenom']." ".$row['nom'];
+    }
     
     $premDimanche+=60*60*24; //On additionne d'un jour (en seconde)
-    echo'<br />' ;
+
 }
-print_r($tab)
-
-
+ 
+print_r($tab);
 
 ?>
-
-<!DOCTYPE html>
-
-<html lang="fr">
-
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title> Connexion SUAPS </title>
-    <link rel="stylesheet" media="" href="style.css">
-</head>
-
-<body>
-
-<table>
-   <caption>PLANNING DE RESERVATION</caption>
-
-   <thead> <!-- En-tête du tableau -->
-       <tr>
-           <th><?php echo date('F',$premDimanche);?></th>
-           <th>Joueur 1</th>
-           <th>Joueur 2</th>
-           <th>Joueur 3</th>
-           <th>Joueur 4</th>
-           <th>Rés.</th>
-       </tr>
-   </thead>
-
-   <tbody> <!-- Corps du tableau -->
-      	<?php 
-      	$i=1;
-      	while($i<=14){
-      	?>	<tr>
-      			<td><?php echo $tab[$i]; ?></td>
-      			<td></td>
-      			<td></td>  
-      			<td></td>  
-      			<td></td>  
-      			<td></td>
-      		</tr> 
-      	<?php 
-      	$i=$i+1;
-      	}
-      	?>       
-   </tbody>
-</table>
-
-</body>
-
-</html>
