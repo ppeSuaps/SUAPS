@@ -18,7 +18,7 @@ catch (Exception $e)
 $id = $_POST['pseudo'];
 $mdp = $_POST['mdp'];
 
-$sql="SELECT * FROM identifiant WHERE idCompte='".$id."' AND mdp='".$mdp."'";
+$sql="select * FROM identifiant WHERE idCompte='".$id."' AND mdp='".$mdp."'";
 $req = $bdd->query($sql);
 
 if ($row = $req->fetch()) {
@@ -111,7 +111,7 @@ for($i=0;$i<=180;$i++)
     //     $chDate= $jour." ".date('j',$premDimanche)." ".$mois;
     $chDate= $jour." ".date('d',$premDimanche)."/".date('m',$premDimanche)."/".date('Y',$premDimanche)."\n";
     $tab[$i][0]=$chDate;
-    $sql="SELECT * FROM utilisateur U JOIN reservation R ON U.idUtil=R.fk_idUtil WHERE datePrevu='".substr($tab[$i][0], -5, 4)."-".substr($tab[$i][0], -8, 2)."-".substr($tab[$i][0], -11, 2)."'";
+    $sql="select * FROM utilisateur U JOIN reservation R ON U.idUtil=R.fk_idUtil WHERE datePrevu='".substr($tab[$i][0], -5, 4)."-".substr($tab[$i][0], -8, 2)."-".substr($tab[$i][0], -11, 2)."'";
     
     $req=$bdd->query($sql);
     while($row = $req->fetch()){
@@ -122,7 +122,7 @@ for($i=0;$i<=180;$i++)
     
 }
 
-$sql2="SELECT * FROM utilisateur WHERE idUtil='".$id."'";
+$sql2="select * FROM utilisateur WHERE idUtil='".$id."'";
 $req2 = $bdd->query($sql2);
 $row2=$req2->fetch();
 
@@ -135,7 +135,7 @@ $nbRes=$row2['nbReserv'];
 $nbAnnul=$row2['nbTickAnnul'];
 $nbInv=$row2['nbInv'];
 
-$sql3="SELECT * FROM utilisateur WHERE estMembre=0";
+$sql3="select * FROM utilisateur WHERE estMembre=0";
 $req3 = $bdd->query($sql3);
 
 ?>
@@ -161,11 +161,11 @@ $req3 = $bdd->query($sql3);
 
 <nav>
     <ul>
-        <li class="icone"><a href="https://sport.unistra.fr/suaps/actualites/"><i class="fa fa-home fa-2x"></i></a></li>
-        <li><b><a href="reservation.php">Réservation</a></b></li>
-        <li><b><a href="aide.html">Aide</a></b></li>
-        <li><b><a href="contact.html">Contact</a></b></li>
-        <li class="icone"><a href="connexion.php"><i class="fa fa-power-off fa-2x"></i></a></li>
+        <li class="icone"><a href="https://sport.unistra.fr/suaps/actualites/" title="Accueil SUAPS"><i class="fa fa-home fa-2x"></i></a></li>
+        <li><b><a href="reservation.php" title="Réservation">Réservation</a></b></li>
+        <li><b><a href="aide.html" title="Aide">Aide</a></b></li>
+        <li><b><a href="contact.html" title="Contact">Contact</a></b></li>
+        <li class="icone"><a href="connexion.php" title="Déconnexion""><i class="fa fa-power-off fa-2x"></i></a></li>
     </ul>
 </nav>
 
@@ -255,7 +255,14 @@ $req3 = $bdd->query($sql3);
           				}
           			    ?>
           			</td>  
-          			<td>
+          			<td align="center">
+          				<?php 
+          				if(!isset($tab[$i][4])){
+          				    ?><i class="fa fa-check fa-1,5x" style="color: green"><?php
+          				}else{
+          				    ?><i class="fa fa-close fa-1,5x" style="color: red"><?php
+          				}
+          			    ?>
           			</td>
           		</tr> 
           	<?php 
@@ -269,90 +276,95 @@ $req3 = $bdd->query($sql3);
 </div>
 
 <div class = "res" >
+	<form method="post" action="reserver.php">
 	<div class = "inv">
 	<h2>Réserver</h2>
 		<p for="resa">Invité</p>
-        <SELECT name="resa" size="1">
-        	<OPTION>----------------</OPTION>
+        <select name="resa" size="1">
+        	<option>----------------</option>
         	<?php 
         	while($row3=$req3->fetch()){
-        	    ?><OPTION><?php echo $row3['prenom'].' '.$row3['nom']?></OPTION><?php
+        	    ?><option><?php echo $row3['prenom'].' '.$row3['nom']?></option><?php
         	}
         	?>
-		</SELECT>
+		</select>
 	</div>
 
 	<div class = "dateReserv">
 		<p for="dateReserv">Date</label>
 		<br>
-        <SELECT class="date" name="jDateReserv" size="1">
+        <select class="date" name="jDateReserv" size="1">
 			<?php 
 			$i=1;
 			while($i<=31){
-			    ?><OPTION><?php echo $i;
+			    ?><option><?php echo sprintf( "%02d", $i );
 			    $i=$i+1;
 			}
 			?>
-		</SELECT>
-		<SELECT class="date" name="mDateReserv" size="1">
+		</select>
+		<select class="date" name="mDateReserv" size="1">
 			<?php 
 			$i=1;
 			while($i<=12){
-			    ?><OPTION><?php echo $i;
+			    ?><option><?php echo sprintf( "%02d", $i );
 			    $i=$i+1;
 			}
 			?>
-		</SELECT>
-		<SELECT class="date" name="yDateReserv" size="1">
+		</select>
+		<select class="date" name="yDateReserv" size="1">
 			<?php 
 			$i=2018;
 			while($i<=2028){
-			    ?><OPTION><?php echo $i;
+			    ?><option><?php echo $i;
 			    $i=$i+1;
 			}
 			?>
-		</SELECT>
-		<div class="div_btnreserv">
-			<button class="reserver"><span>Réserver</span></button>
-		</div>
+		</select>
+	
+	<div class="div_btnreserv">
+		<button class="reserver"><span>Réserver</span></button>
+	</div>
+	</form>
 	</div>
 	
 	<div class="annuler">
+		<form method="post" action="annuler.php">
 		<h2>Annuler</h2>
         <p for="dateAnnul">Date</p>
-        <SELECT class="date" name="jDateAnnul" size="1">
+        <select class="date" name="jDateAnnul" size="1">
 			<?php 
 			$i=1;
 			while($i<=31){
-			    ?><OPTION><?php echo $i;
+			    ?><option><?php echo sprintf( "%02d", $i );
 			    $i=$i+1;
 			}
 			?>
-		</SELECT>
-		<SELECT class="date" name="mDateAnnul" size="1">
+		</select>
+		<select class="date" name="mDateAnnul" size="1">
 			<?php 
 			$i=1;
 			while($i<=12){
-			    ?><OPTION><?php echo $i;
+			    ?><option><?php echo sprintf( "%02d", $i );
 			    $i=$i+1;
 			}
 			?>
-		</SELECT>
-		<SELECT class="date" name="yDateAnnul" size="1">
+		</select>
+		<select class="date" name="yDateAnnul" size="1">
 			<?php 
 			$i=2018;
 			while($i<=2028){
-			    ?><OPTION><?php echo $i;
+			    ?><option><?php echo $i;
 			    $i=$i+1;
 			}
 			?>
-		</SELECT>
+		</select>
 		<div class="checkbox">
-			<p><input class="invOuPas" type="checkbox"> Uniquement l'invité ?</input></p>
+			<p><input class="invOuPas"  name="invOuPas" type="checkbox"> Uniquement l'invité ?</input></p>
 		</div>
 		<div class="div_btnAnnul">
 			<button class="annul"><span>Confirmer</span></button>
 		</div>
+		</form>
 	</div>
 </div>
 

@@ -228,7 +228,7 @@ td{
 	padding-top: 135px;
 }
 
-form{
+.form form{
     width: 311px;
     margin-top: 150px;
     margin-bottom: 100px;
@@ -322,6 +322,11 @@ input[type=text], input[type=password]{
 
 i{
     margin-top: 5px;
+}
+
+td i{
+	margin:0 auto;
+	padding:0 auto;
 }
 
 .fa { 
