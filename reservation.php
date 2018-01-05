@@ -39,7 +39,7 @@ $date = strtotime(date("Y-m-d"));
 $premDimanche = strtotime(date('Y-m-d',strtotime("last Sunday")));
 $derDimanche = date("Y-m-d", strtotime($premDimanche . " +13 day"));
 
-$tab[]=array();
+$tab[]=array(array());
 
 for($i=0;$i<=180;$i++)
 {
@@ -67,7 +67,7 @@ for($i=0;$i<=180;$i++)
             $jour="Samedi";
             break;
     }
-            
+    
     $mois= date('F',$premDimanche);
     switch ($mois) {
         case "January":
@@ -108,11 +108,18 @@ for($i=0;$i<=180;$i++)
             break;
     }
     
-//     $chDate= $jour." ".date('j',$premDimanche)." ".$mois;
-    $chDate= $jour." ".date('d',$premDimanche)."/".date('m',$premDimanche)."/".date('Y',$premDimanche);
-    array_push($tab, $chDate);
+    //     $chDate= $jour." ".date('j',$premDimanche)." ".$mois;
+    $chDate= $jour." ".date('d',$premDimanche)."/".date('m',$premDimanche)."/".date('Y',$premDimanche)."\n";
+    $tab[$i][0]=$chDate;
+    $sql="SELECT * FROM utilisateur U JOIN reservation R ON U.idUtil=R.fk_idUtil WHERE datePrevu='".substr($tab[$i][0], -5, 4)."-".substr($tab[$i][0], -8, 2)."-".substr($tab[$i][0], -11, 2)."'";
+    
+    $req=$bdd->query($sql);
+    while($row = $req->fetch()){
+        array_push($tab[$i], $row['prenom']." ".$row['nom']);
+    }
     
     $premDimanche+=60*60*24; //On additionne d'un jour (en seconde)
+    
 }
 
 $sql2="SELECT * FROM utilisateur WHERE idUtil='".$id."'";
@@ -172,6 +179,8 @@ $req3 = $bdd->query($sql3);
 	<p> Réservations : <?php echo $nbRes?>  </p>
 	<p> Annulations : <?php echo $nbAnnul?>  </p>
 	<p> Invitations : <?php echo $nbInv?>  </p>
+	<br>
+	<img src="img/golf.png" width="200">
 	
 	
 </div>
@@ -202,15 +211,52 @@ $req3 = $bdd->query($sql3);
     
        <tbody> <!-- Corps du tableau -->
           	<?php 
-          	$i=1;
-          	while($i<=181){
-          	?>	<tr>
-          			<td width="20%" height="30px"><?php echo $tab[$i]; ?></td>
-          			<td></td>
-          			<td></td>  
-          			<td></td>  
-          			<td></td>  
-          			<td></td>
+          	$i=0;
+          	while($i<=180){
+          	    if(substr($tab[$i][0], 0, 8)=="Dimanche" || substr($tab[$i][0], 0, 6)=="Samedi"){
+          	         ?><tr style="background-color: #ABABAB"><?php 
+          	    }else{
+          	         ?><tr><?php 
+          	    }?>
+          			<td><?php echo $tab[$i][0]; ?></td>
+          			<td>
+          				<?php 
+          				if(isset($tab[$i][1])){ 
+          			       echo $tab[$i][1];
+          			    }else{
+          			       echo "";
+          			    }
+          			    ?>
+          			</td>
+          			<td>
+          				<?php 
+          				if(isset($tab[$i][2])){
+          				    echo $tab[$i][2];
+          				}else{
+          				    echo "";
+          				}
+          			    ?>
+          			</td>  
+          			<td>
+          				<?php 
+          				if(isset($tab[$i][3])){
+          				    echo $tab[$i][3];
+          				}else{
+          				    echo "";
+          				}
+          			    ?>
+          			</td>  
+          			<td>
+          				<?php 
+          				if(isset($tab[$i][4])){
+          				    echo $tab[$i][4];
+          				}else{
+          				    echo "";
+          				}
+          			    ?>
+          			</td>  
+          			<td>
+          			</td>
           		</tr> 
           	<?php 
           	$i=$i+1;

@@ -129,6 +129,11 @@ td,tr,th {
     color: #373737;
 }
 
+td{
+	width: 20%;
+	height: 30px;
+}
+
 .tab table
 {
 	width: 100%;
