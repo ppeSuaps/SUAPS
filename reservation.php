@@ -1,4 +1,9 @@
 <?php
+session_start();
+
+// On s'amuse à créer quelques variables de session dans $_SESSION
+$_SESSION['pseudo'] = $_POST['pseudo'];
+$_SESSION['mdp']=$_POST['mdp'];
 
 try
 {
@@ -15,8 +20,8 @@ catch (Exception $e)
     
 }
 
-$id = $_POST['pseudo'];
-$mdp = $_POST['mdp'];
+$id =$_SESSION['pseudo'];
+$mdp = $_SESSION['mdp'];
 
 $sql="select * FROM identifiant WHERE idCompte='".$id."' AND mdp='".$mdp."'";
 $req = $bdd->query($sql);
