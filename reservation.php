@@ -2,8 +2,10 @@
 session_start();
 
 // On s'amuse à créer quelques variables de session dans $_SESSION
-$_SESSION['pseudo'] = $_POST['pseudo'];
-$_SESSION['mdp']=$_POST['mdp'];
+if($_SERVER['HTTP_REFERER']=="http://localhost/SUAPS/connexion.php"){
+    $_SESSION['pseudo'] = $_POST['pseudo'];
+    $_SESSION['mdp']=$_POST['mdp'];
+}
 
 try
 {
@@ -73,47 +75,6 @@ for($i=0;$i<=180;$i++)
             break;
     }
     
-    $mois= date('F',$premDimanche);
-    switch ($mois) {
-        case "January":
-            $mois="Janvier";
-            break;
-        case "February":
-            $mois="Février";
-            break;
-        case "March":
-            $mois="Mars";
-            break;
-        case "April":
-            $mois="Avril";
-            break;
-        case "May":
-            $mois="Mai";
-            break;
-        case "June":
-            $mois="Juin";
-            break;
-        case "July":
-            $mois="Juillet";
-            break;
-        case "August":
-            $mois="Août";
-            break;
-        case "September":
-            $mois="Septembre";
-            break;
-        case "October":
-            $mois="Octobre";
-            break;
-        case "November":
-            $mois="Novembre";
-            break;
-        case "December":
-            $mois="Décembre";
-            break;
-    }
-    
-    //     $chDate= $jour." ".date('j',$premDimanche)." ".$mois;
     $chDate= $jour." ".date('d',$premDimanche)."/".date('m',$premDimanche)."/".date('Y',$premDimanche)."\n";
     $tab[$i][0]=$chDate;
     $sql="select * FROM utilisateur U JOIN reservation R ON U.idUtil=R.fk_idUtil WHERE datePrevu='".substr($tab[$i][0], -5, 4)."-".substr($tab[$i][0], -8, 2)."-".substr($tab[$i][0], -11, 2)."'";
@@ -140,7 +101,7 @@ $nbRes=$row2['nbReserv'];
 $nbAnnul=$row2['nbTickAnnul'];
 $nbInv=$row2['nbInv'];
 
-$sql3="select * FROM utilisateur WHERE estMembre=0";
+$sql3="select * FROM utilisateur";
 $req3 = $bdd->query($sql3);
 
 ?>
@@ -364,7 +325,7 @@ $req3 = $bdd->query($sql3);
 			?>
 		</select>
 		<div class="checkbox">
-			<p><input class="invOuPas"  name="invOuPas" type="checkbox"> Uniquement l'invité ?</input></p>
+			<p><input class="invOuPas"  name="invOuPas" type="checkbox" value="1"> Uniquement l'invité ?</input></p>
 		</div>
 		<div class="div_btnAnnul">
 			<button class="annul"><span>Confirmer</span></button>

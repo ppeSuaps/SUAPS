@@ -16,4 +16,22 @@ catch (Exception $e)
     
 }
 
+$jDateAnnul=$_POST['jDateAnnul'];
+$mDateAnnul=$_POST['mDateAnnul'];
+$yDateAnnul=$_POST['yDateAnnul'];
+
+
+if ($_POST['invOuPas'] == '1'){
+    $sql="DELETE FROM reservation WHERE datePrevu='".$yDateAnnul."-".$mDateAnnul."-".$jDateAnnul."' AND fk_idInv='".$_SESSION['pseudo']."'";
+    $bdd->exec($sql);
+}else{
+    $sql2="DELETE FROM reservation WHERE datePrevu='".$yDateAnnul."-".$mDateAnnul."-".$jDateAnnul."' AND fk_idUtil='".$_SESSION['pseudo']."'";
+    $bdd->exec($sql2);
+    $sql3="DELETE FROM reservation WHERE datePrevu='".$yDateAnnul."-".$mDateAnnul."-".$jDateAnnul."' AND fk_idInv='".$_SESSION['pseudo']."'";
+    $bdd->exec($sql3);
+}
+
+header('Location: http://localhost/SUAPS/reservation.php');
+exit();
+
 ?>
